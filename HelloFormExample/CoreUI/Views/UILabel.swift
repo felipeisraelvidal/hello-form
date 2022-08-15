@@ -1,6 +1,7 @@
 import UIKit
 
 extension UILabel: DeclarativeLabel {
+    public typealias View = UILabel
     
     // MARK: - Initializers
     

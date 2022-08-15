@@ -55,6 +55,14 @@
 		552CAEC528A56FCC0074FABE /* SubtitleTitleDescriptionRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552CAEBC28A56FCC0074FABE /* SubtitleTitleDescriptionRowTableViewCell.swift */; };
 		552CAEC728A56FD50074FABE /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552CAEC628A56FD50074FABE /* FormViewController.swift */; };
 		552CAEC928A570020074FABE /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552CAEC828A570020074FABE /* UIColor+Extensions.swift */; };
+		55D3E35A28AA6DDC004477A9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D3E35628AA6DDC004477A9 /* UIView.swift */; };
+		55D3E35B28AA6DDC004477A9 /* HStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D3E35728AA6DDC004477A9 /* HStack.swift */; };
+		55D3E35C28AA6DDC004477A9 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D3E35828AA6DDC004477A9 /* UILabel.swift */; };
+		55D3E35D28AA6DDC004477A9 /* VStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D3E35928AA6DDC004477A9 /* VStack.swift */; };
+		55D3E36128AA6DEA004477A9 /* DeclarativeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D3E35F28AA6DEA004477A9 /* DeclarativeView.swift */; };
+		55D3E36228AA6DEA004477A9 /* StackModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D3E36028AA6DEA004477A9 /* StackModifier.swift */; };
+		55D3E36528AA6DF9004477A9 /* StackBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D3E36428AA6DF9004477A9 /* StackBuilder.swift */; };
+		55D3E36828AA6ED7004477A9 /* HelloForm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552CAE2B28A56AF70074FABE /* HelloForm.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +144,13 @@
 		552CAEBC28A56FCC0074FABE /* SubtitleTitleDescriptionRowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleTitleDescriptionRowTableViewCell.swift; sourceTree = "<group>"; };
 		552CAEC628A56FD50074FABE /* FormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		552CAEC828A570020074FABE /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		55D3E35628AA6DDC004477A9 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		55D3E35728AA6DDC004477A9 /* HStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HStack.swift; sourceTree = "<group>"; };
+		55D3E35828AA6DDC004477A9 /* UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		55D3E35928AA6DDC004477A9 /* VStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VStack.swift; sourceTree = "<group>"; };
+		55D3E35F28AA6DEA004477A9 /* DeclarativeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeclarativeView.swift; sourceTree = "<group>"; };
+		55D3E36028AA6DEA004477A9 /* StackModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackModifier.swift; sourceTree = "<group>"; };
+		55D3E36428AA6DF9004477A9 /* StackBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55D3E36828AA6ED7004477A9 /* HelloForm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +204,7 @@
 				552CAE6128A56B0E0074FABE /* HelloFormExampleTests */,
 				552CAE6B28A56B0E0074FABE /* HelloFormExampleUITests */,
 				552CAE2C28A56AF70074FABE /* Products */,
+				55D3E36628AA6ECB004477A9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -231,6 +248,7 @@
 		552CAE4A28A56B0B0074FABE /* HelloFormExample */ = {
 			isa = PBXGroup;
 			children = (
+				55D3E35428AA6DAC004477A9 /* CoreUI */,
 				552CAE4B28A56B0B0074FABE /* AppDelegate.swift */,
 				552CAE4D28A56B0B0074FABE /* SceneDelegate.swift */,
 				552CAE4F28A56B0B0074FABE /* ViewController.swift */,
@@ -348,6 +366,51 @@
 				552CAEC628A56FD50074FABE /* FormViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		55D3E35428AA6DAC004477A9 /* CoreUI */ = {
+			isa = PBXGroup;
+			children = (
+				55D3E36328AA6DEE004477A9 /* Builders */,
+				55D3E35E28AA6DE0004477A9 /* Protocols */,
+				55D3E35528AA6DD3004477A9 /* Views */,
+			);
+			path = CoreUI;
+			sourceTree = "<group>";
+		};
+		55D3E35528AA6DD3004477A9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				55D3E35728AA6DDC004477A9 /* HStack.swift */,
+				55D3E35828AA6DDC004477A9 /* UILabel.swift */,
+				55D3E35628AA6DDC004477A9 /* UIView.swift */,
+				55D3E35928AA6DDC004477A9 /* VStack.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		55D3E35E28AA6DE0004477A9 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				55D3E35F28AA6DEA004477A9 /* DeclarativeView.swift */,
+				55D3E36028AA6DEA004477A9 /* StackModifier.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		55D3E36328AA6DEE004477A9 /* Builders */ = {
+			isa = PBXGroup;
+			children = (
+				55D3E36428AA6DF9004477A9 /* StackBuilder.swift */,
+			);
+			path = Builders;
+			sourceTree = "<group>";
+		};
+		55D3E36628AA6ECB004477A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -601,9 +664,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55D3E35D28AA6DDC004477A9 /* VStack.swift in Sources */,
+				55D3E35A28AA6DDC004477A9 /* UIView.swift in Sources */,
+				55D3E36228AA6DEA004477A9 /* StackModifier.swift in Sources */,
 				552CAE5028A56B0B0074FABE /* ViewController.swift in Sources */,
+				55D3E35B28AA6DDC004477A9 /* HStack.swift in Sources */,
 				552CAE4C28A56B0B0074FABE /* AppDelegate.swift in Sources */,
+				55D3E36528AA6DF9004477A9 /* StackBuilder.swift in Sources */,
+				55D3E35C28AA6DDC004477A9 /* UILabel.swift in Sources */,
 				552CAE4E28A56B0B0074FABE /* SceneDelegate.swift in Sources */,
+				55D3E36128AA6DEA004477A9 /* DeclarativeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
