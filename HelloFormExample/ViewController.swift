@@ -14,6 +14,8 @@ class ViewController: FormViewController {
     private var testString = Observable("Hello, World!")
     
     private let loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    
+    private var isHiddenCustomRow = Observable(false)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,14 @@ class ViewController: FormViewController {
                     .fillSuperview(offset: 0)
                     .setHeight(80)
                 }
+                .hidden(isHiddenCustomRow)
+                
+                TextRow(.left("Show/Hide"))
+                    .textColor(.systemBlue)
+                    .deselectWhenSelect(true)
+                    .addAction {
+                        self.isHiddenCustomRow.value.toggle()
+                    }
             }
             
             FormSection(title: "Slider") {
