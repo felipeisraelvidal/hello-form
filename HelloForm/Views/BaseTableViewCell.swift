@@ -5,6 +5,8 @@ public class BaseTableViewCell<T: FormRow>: UITableViewCell {
     private(set) var indexPath: IndexPath?
     private(set) var model: T?
     
+    private var isHiddenCell: Bool = false
+    
     private(set) lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [])
         stackView.axis = .horizontal
@@ -94,6 +96,15 @@ public class BaseTableViewCell<T: FormRow>: UITableViewCell {
         if model._isHiddenSeparator {
             separatorInset = UIEdgeInsets(top: 0, left: 2000, bottom: 0, right: 0)
         }
+        
+        isHiddenCell = model._isHiddenRow.value
+        
+        model._isHiddenRow.bind { [weak self] result in
+            if result != self?.isHiddenCell {
+                self?.reloadSection()
+                self?.isHiddenCell = result
+            }
+        }
     }
     
     open func loadView() {}
@@ -101,6 +112,12 @@ public class BaseTableViewCell<T: FormRow>: UITableViewCell {
     func reloadRow() {
         if let indexPath = indexPath {
             self.tableView?.reloadRows(at: [indexPath], with: model?._reloadRowAnimation ?? .automatic)
+        }
+    }
+    
+    func reloadSection() {
+        if let indexPath = indexPath {
+            tableView?.reloadSections(IndexSet(integer: indexPath.section), with: model?._reloadRowAnimation ?? .automatic)
         }
     }
 

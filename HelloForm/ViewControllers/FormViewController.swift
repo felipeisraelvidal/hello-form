@@ -85,6 +85,20 @@ open class FormViewController: UIViewController {
         row.detailDisclosureButtonAction?()
     }
     
+    private func dequeueReusableCell<T: FormRow, R: BaseTableViewCell<T>>(rowType: T.Type, cellType: R.Type, formRow: T, atIndexPath indexPath: IndexPath) -> R? {
+        if formRow._isHiddenRow.value == true {
+            return nil
+        }
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.identifier, for: indexPath) as? R else {
+            return nil
+        }
+        
+        cell.configure(with: formRow, atIndexPath: indexPath)
+        
+        return cell
+    }
+    
     // MARK: - Public methods
     
     public func makeSections(@FormBuilder _ content: () -> [FormSection]) {
@@ -156,7 +170,7 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].rows.count
+        return sections[section].rows.filter({ ($0 as? FormRow)?._isHiddenRow.value == false }).count
     }
     
     public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -164,88 +178,60 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = sections[indexPath.section].rows[indexPath.row]
+        guard let row = sections[indexPath.section].rows.filter({ ($0 as? FormRow)?._isHiddenRow.value == false })[indexPath.row] as? FormRow else { return UITableViewCell() }
         
         switch row.self {
         case let formRow where formRow is TextRow:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: TextRowTableViewCell.identifier, for: indexPath) as? TextRowTableViewCell else {
+            guard let cell = dequeueReusableCell(rowType: TextRow.self, cellType: TextRowTableViewCell.self, formRow: formRow as! TextRow, atIndexPath: indexPath) else {
                 return UITableViewCell()
             }
-            
-            cell.configure(with: formRow as! TextRow, atIndexPath: indexPath)
-            
             return cell
         case let formRow where formRow is TitleDescriptionRow:
             let formRow = formRow as! TitleDescriptionRow
             switch formRow.cellStyle {
             case .default:
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: DefaultTitleDescriptionRowTableViewCell.identifier, for: indexPath) as? DefaultTitleDescriptionRowTableViewCell else {
+                guard let cell = dequeueReusableCell(rowType: TitleDescriptionRow.self, cellType: DefaultTitleDescriptionRowTableViewCell.self, formRow: formRow, atIndexPath: indexPath) else {
                     return UITableViewCell()
                 }
-                
-                cell.configure(with: formRow, atIndexPath: indexPath)
-                
                 return cell
             case .subtitle:
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: SubtitleTitleDescriptionRowTableViewCell.identifier, for: indexPath) as? SubtitleTitleDescriptionRowTableViewCell else {
+                guard let cell = dequeueReusableCell(rowType: TitleDescriptionRow.self, cellType: SubtitleTitleDescriptionRowTableViewCell.self, formRow: formRow, atIndexPath: indexPath) else {
                     return UITableViewCell()
                 }
-                
-                cell.configure(with: formRow, atIndexPath: indexPath)
-                
                 return cell
             }
         case let formRow where formRow is CustomRow:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomRowTableViewCell.identifier, for: indexPath) as? CustomRowTableViewCell else {
+            guard let cell = dequeueReusableCell(rowType: CustomRow.self, cellType: CustomRowTableViewCell.self, formRow: formRow as! CustomRow, atIndexPath: indexPath) else {
                 return UITableViewCell()
             }
-            
-            cell.configure(with: formRow as! CustomRow, atIndexPath: indexPath)
-            
             return cell
         case let formRow where formRow is TextFieldRow:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldRowTableViewCell.identifier, for: indexPath) as? TextFieldRowTableViewCell else {
+            guard let cell = dequeueReusableCell(rowType: TextFieldRow.self, cellType: TextFieldRowTableViewCell.self, formRow: formRow as! TextFieldRow, atIndexPath: indexPath) else {
                 return UITableViewCell()
             }
-            
-            cell.configure(with: formRow as! TextFieldRow, atIndexPath: indexPath)
-            
             return cell
         case let formRow where formRow is SwitchRow:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchRowTableViewCell.identifier, for: indexPath) as? SwitchRowTableViewCell else {
+            guard let cell = dequeueReusableCell(rowType: SwitchRow.self, cellType: SwitchRowTableViewCell.self, formRow: formRow as! SwitchRow, atIndexPath: indexPath) else {
                 return UITableViewCell()
             }
-            
-            cell.configure(with: formRow as! SwitchRow, atIndexPath: indexPath)
-            
             return cell
         case let formRow where formRow is StepperRow:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: StepperRowTableViewCell.identifier, for: indexPath) as? StepperRowTableViewCell else {
+            guard let cell = dequeueReusableCell(rowType: StepperRow.self, cellType: StepperRowTableViewCell.self, formRow: formRow as! StepperRow, atIndexPath: indexPath) else {
                 return UITableViewCell()
             }
-            
-            cell.configure(with: formRow as! StepperRow, atIndexPath: indexPath)
-            
             return cell
         case let formRow where formRow is SliderRow:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SliderRowTableViewCell.identifier, for: indexPath) as? SliderRowTableViewCell else {
+            guard let cell = dequeueReusableCell(rowType: SliderRow.self, cellType: SliderRowTableViewCell.self, formRow: formRow as! SliderRow, atIndexPath: indexPath) else {
                 return UITableViewCell()
             }
-            
-            cell.configure(with: formRow as! SliderRow, atIndexPath: indexPath)
-            
             return cell
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            
-            cell.textLabel?.text = "Row \(indexPath.row)"
-            
-            return cell
+            return UITableViewCell()
         }
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = sections[indexPath.section].rows[indexPath.row]
+        let row = sections[indexPath.section].rows.filter({ ($0 as? FormRow)?._isHiddenRow.value == false })[indexPath.row]
         
         switch row.self {
         case let formRow where formRow is TextRow:
@@ -268,7 +254,7 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        let row = sections[indexPath.section].rows[indexPath.row]
+        let row = sections[indexPath.section].rows.filter({ ($0 as? FormRow)?._isHiddenRow.value == false })[indexPath.row]
         switch row.self {
         case let formRow where formRow is TextRow:
             handleAccessoryButtonTap(row: (formRow as! TextRow), at: indexPath)
