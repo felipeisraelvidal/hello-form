@@ -73,19 +73,7 @@ open class FormViewController: UIViewController {
         
     }
     
-    private func handleCellSelection(row: Row, at indexPath: IndexPath) {
-        if row._deselectWhenSelect {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
-        
-        row.action?()
-    }
-    
-    private func handleAccessoryButtonTap(row: Row, at indexPath: IndexPath) {
-        row.detailDisclosureButtonAction?()
-    }
-    
-    private func dequeueReusableCell<T: FormRow, R: BaseTableViewCell<T>>(rowType: T.Type, cellType: R.Type, formRow: T, atIndexPath indexPath: IndexPath) -> R? {
+    private func dequeueReusableCell<T: Row, R: BaseTableViewCell<T>>(rowType: T.Type, cellType: R.Type, formRow: T, atIndexPath indexPath: IndexPath) -> R? {
         if formRow._isHiddenRow.value == true {
             return nil
         }
@@ -231,46 +219,19 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = sections[indexPath.section].rows.filter({ ($0 as? FormRow)?._isHiddenRow.value == false })[indexPath.row]
+        guard let row = sections[indexPath.section].rows.filter({ ($0 as? Row)?._isHiddenRow.value == false })[indexPath.row] as? Row else { return }
         
-        switch row.self {
-        case let formRow where formRow is TextRow:
-            handleCellSelection(row: (formRow as! TextRow), at: indexPath)
-        case let formRow where formRow is TitleDescriptionRow:
-            handleCellSelection(row: (formRow as! TitleDescriptionRow), at: indexPath)
-        case let formRow where formRow is CustomRow:
-            handleCellSelection(row: (formRow as! CustomRow), at: indexPath)
-        case let formRow where formRow is TextFieldRow:
-            handleCellSelection(row: (formRow as! TextFieldRow), at: indexPath)
-        case let formRow where formRow is SwitchRow:
-            handleCellSelection(row: (formRow as! SwitchRow), at: indexPath)
-        case let formRow where formRow is StepperRow:
-            handleCellSelection(row: (formRow as! StepperRow), at: indexPath)
-        case let formRow where formRow is SliderRow:
-            handleCellSelection(row: (formRow as! SliderRow), at: indexPath)
-        default:
-            break
+        if row._deselectWhenSelect {
+            tableView.deselectRow(at: indexPath, animated: true)
         }
+        
+        row.action?()
     }
     
     public func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        let row = sections[indexPath.section].rows.filter({ ($0 as? FormRow)?._isHiddenRow.value == false })[indexPath.row]
-        switch row.self {
-        case let formRow where formRow is TextRow:
-            handleAccessoryButtonTap(row: (formRow as! TextRow), at: indexPath)
-        case let formRow where formRow is TitleDescriptionRow:
-            handleAccessoryButtonTap(row: (formRow as! TitleDescriptionRow), at: indexPath)
-        case let formRow where formRow is CustomRow:
-            handleAccessoryButtonTap(row: (formRow as! CustomRow), at: indexPath)
-        case let formRow where formRow is TextFieldRow:
-            handleAccessoryButtonTap(row: (formRow as! TextFieldRow), at: indexPath)
-        case let formRow where formRow is SwitchRow:
-            handleAccessoryButtonTap(row: (formRow as! SwitchRow), at: indexPath)
-        case let formRow where formRow is SliderRow:
-            handleAccessoryButtonTap(row: (formRow as! SliderRow), at: indexPath)
-        default:
-            break
-        }
+        guard let row = sections[indexPath.section].rows.filter({ ($0 as? Row)?._isHiddenRow.value == false })[indexPath.row] as? Row else { return }
+        
+        row.detailDisclosureButtonAction?()
     }
     
 }

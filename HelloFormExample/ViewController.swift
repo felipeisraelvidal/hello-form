@@ -129,6 +129,9 @@ class ViewController: FormViewController {
                         .addAction {
                             self.showNextViewController()
                         }
+                        .addDetailDisclosureButtonAction {
+                            print(item)
+                        }
                 }
             }
 
