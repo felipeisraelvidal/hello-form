@@ -11,7 +11,7 @@ class ViewController: FormViewController {
     
     @Pub private var sliderValue: Float = 0
     
-    private var testString = Observable("Hello, World!")
+    @Pub private var testString: String = "Hello, World!"
     
     private let loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     
@@ -150,13 +150,13 @@ class ViewController: FormViewController {
             }
 
             FormSection(footer: loremIpsum) {
-                TitleDescriptionRow(title: "Title", description: .right(testString))
+                TitleDescriptionRow(title: "Title", description: $testString)
                     .textColor(
                         titleLabel: .systemPurple,
                         descriptionLabel: .systemBrown
                     )
                 
-                TitleDescriptionRow(.subtitle, title: "Title", description: .left(loremIpsum))
+                TitleDescriptionRow(.subtitle, title: "Title", description: loremIpsum)
                 
                 TextRow("Reload First Cell")
                     .textColor(.systemBlue)
@@ -180,7 +180,7 @@ class ViewController: FormViewController {
     }
     
     func updateFirstCell() {
-        testString.value = loremIpsum
+        testString = loremIpsum
     }
     
     func addSection() {
