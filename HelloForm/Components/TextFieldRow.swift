@@ -3,7 +3,7 @@ import UIKit
 public final class TextFieldRow: Row, TextFieldModifier {
     
     private(set) var placeholder: String
-    private(set) var text: Observable<String>
+    @Pub private(set) var text: String
     
     private(set) var _font: UIFont = .preferredFont(forTextStyle: .body)
     private(set) var _textColor: UIColor = UIColor.SystemColor.label
@@ -19,9 +19,9 @@ public final class TextFieldRow: Row, TextFieldModifier {
     
     // MARK: - Initializers
     
-    public init(_ placeholder: String, text: Observable<String>, image: UIImage? = nil) {
+    public init(_ placeholder: String, text: Pub<String>, image: UIImage? = nil) {
         self.placeholder = placeholder
-        self.text = text
+        self._text = text
         
         super.init(image: image)
     }
@@ -80,6 +80,12 @@ public final class TextFieldRow: Row, TextFieldModifier {
     public func onSubmit(_ action: @escaping ((String) -> Void)) -> TextFieldRow {
         self.onSubmitAction = action
         return self
+    }
+    
+    // MARK: - Public methods
+    
+    public func changeValue(to newValue: String) {
+        self.text = newValue
     }
     
 }

@@ -3,8 +3,8 @@ import HelloForm
 
 class ViewController: FormViewController {
     
-    private var text = Observable("")
-    private var isPrivate = Observable(false)
+    @Pub private var text = ""
+    @Pub private var isPrivate = false
     
     @Pub private var stepperValue: Double = 2
     @Pub private var stepperValueChangeMode: String = "No value changed"
@@ -100,10 +100,10 @@ class ViewController: FormViewController {
             }
             
             FormSection(footer: "Enter your text and tap enter to add new item") {
-                SwitchRow("Is private", isOn: isPrivate)
+                SwitchRow("Is private", isOn: $isPrivate)
                     .selectionStyle(.none)
                 
-                TextFieldRow("Placeholder", text: self.text)
+                TextFieldRow("Placeholder", text: $text)
                     .font(.preferredFont(forTextStyle: .title2))
                     .onSubmit { [weak self] _ in
                         self?.addRow()
@@ -191,13 +191,13 @@ class ViewController: FormViewController {
     }
     
     func addRow() {
-        if text.value != "" {
-            let newTextRow = TextRow("\(isPrivate.value ? "[L] " : "")\(text.value)")
+        if text != "" {
+            let newTextRow = TextRow("\(isPrivate ? "[L] " : "")\(text)")
                 .accessoryType(.detailDisclosureButton)
             
             insertRow(newTextRow, atSection: "section_1", at: 0)
             
-            self.text.value = ""
+            self.text = ""
         }
     }
     

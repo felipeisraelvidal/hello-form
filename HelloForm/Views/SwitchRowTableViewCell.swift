@@ -35,7 +35,7 @@ class SwitchRowTableViewCell: BaseTableViewCell<SwitchRow> {
         
         swt.tintColor = model._tintColor
         
-        model.isOn.bind { result in
+        model.$isOn.bind { result in
             self.swt.setOn(result, animated: true)
         }
     }
@@ -49,7 +49,7 @@ class SwitchRowTableViewCell: BaseTableViewCell<SwitchRow> {
     // MARK: - Private methods
     
     @objc private func handleSwitchChange(_ sender: UISwitch) {
-        model?.isOn.value = sender.isOn
+        model?.changeValue(to: sender.isOn)
     }
 
 }
