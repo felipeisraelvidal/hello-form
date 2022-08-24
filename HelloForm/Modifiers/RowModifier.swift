@@ -13,5 +13,5 @@ public protocol FormRowModifier {
     func addDetailDisclosureButtonAction(_ action: @escaping () -> Void) -> Row
     func hideSeparators() -> Row
     func reloadRowAnimation(_ animation: UITableView.RowAnimation) -> Row
-    func hidden(_ flag: Observable<Bool>) -> Row
+    func hidden(_ flag: Pub<Bool>) -> Row
 }

@@ -2,7 +2,7 @@ import UIKit
 
 public final class StepperRow: Row, StepperRowModifier {
     private(set) var title: String
-    private(set) var value: Observable<Double>
+    @Pub private(set) var value: Double
     private(set) var bounds: ClosedRange<Double>
     private(set) var step: Double.Stride = 1
     
@@ -16,7 +16,7 @@ public final class StepperRow: Row, StepperRowModifier {
     
     public init(
         _ title: String,
-        value: Observable<Double>,
+        value: Pub<Double>,
         in bounds: ClosedRange<Double>,
         step: Double.Stride = 1,
         image: UIImage? = nil,
@@ -24,7 +24,7 @@ public final class StepperRow: Row, StepperRowModifier {
         onDecrement: (() -> Void)? = nil
     ) {
         self.title = title
-        self.value = value
+        self._value = value
         self.bounds = bounds
         self.step = step
         
@@ -46,6 +46,12 @@ public final class StepperRow: Row, StepperRowModifier {
     public func textColor(_ color: UIColor) -> Row {
         self._textColor = color
         return self
+    }
+    
+    // MARK: - Public methods
+    
+    public func changeValue(to newValue: Double) {
+        self.value = newValue
     }
     
 }

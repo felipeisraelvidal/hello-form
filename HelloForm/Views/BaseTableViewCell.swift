@@ -1,11 +1,11 @@
 import UIKit
 
-public class BaseTableViewCell<T: FormRow>: UITableViewCell {
+public class BaseTableViewCell<T: Row>: UITableViewCell {
     
     private(set) var indexPath: IndexPath?
     private(set) var model: T?
     
-    private var isHiddenCell: Bool = false
+    private var isHiddenCell: Bool = true
     
     private(set) lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [])
@@ -97,12 +97,12 @@ public class BaseTableViewCell<T: FormRow>: UITableViewCell {
             separatorInset = UIEdgeInsets(top: 0, left: 2000, bottom: 0, right: 0)
         }
         
-        isHiddenCell = model._isHiddenRow.value
+        isHiddenCell = model.isHiddenRow
         
-        model._isHiddenRow.bind { [weak self] result in
-            if result != self?.isHiddenCell {
+        model.$isHiddenRow.bind { [weak self] state in
+            if state != self?.isHiddenCell {
                 self?.reloadSection()
-                self?.isHiddenCell = result
+                self?.isHiddenCell = state
             }
         }
     }

@@ -74,7 +74,7 @@ open class FormViewController: UIViewController {
     }
     
     private func dequeueReusableCell<T: Row, R: BaseTableViewCell<T>>(rowType: T.Type, cellType: R.Type, formRow: T, atIndexPath indexPath: IndexPath) -> R? {
-        if formRow._isHiddenRow.value == true {
+        if formRow.isHiddenRow == true {
             return nil
         }
         
@@ -158,7 +158,7 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].rows.filter({ ($0 as? FormRow)?._isHiddenRow.value == false }).count
+        return sections[section].rows.filter({ ($0 as? Row)?.isHiddenRow == false }).count
     }
     
     public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -166,7 +166,7 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let row = sections[indexPath.section].rows.filter({ ($0 as? FormRow)?._isHiddenRow.value == false })[indexPath.row] as? FormRow else { return UITableViewCell() }
+        guard let row = sections[indexPath.section].rows.filter({ ($0 as? Row)?.isHiddenRow == false })[indexPath.row] as? FormRow else { return UITableViewCell() }
         
         switch row.self {
         case let formRow where formRow is TextRow:
@@ -219,7 +219,7 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let row = sections[indexPath.section].rows.filter({ ($0 as? Row)?._isHiddenRow.value == false })[indexPath.row] as? Row else { return }
+        guard let row = sections[indexPath.section].rows.filter({ ($0 as? Row)?.isHiddenRow == false })[indexPath.row] as? Row else { return }
         
         if row._deselectWhenSelect {
             tableView.deselectRow(at: indexPath, animated: true)
@@ -229,7 +229,7 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        guard let row = sections[indexPath.section].rows.filter({ ($0 as? Row)?._isHiddenRow.value == false })[indexPath.row] as? Row else { return }
+        guard let row = sections[indexPath.section].rows.filter({ ($0 as? Row)?.isHiddenRow == false })[indexPath.row] as? Row else { return }
         
         row.detailDisclosureButtonAction?()
     }
