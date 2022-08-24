@@ -9,7 +9,7 @@ class ViewController: FormViewController {
     @Pub private var stepperValue: Double = 2
     @Pub private var stepperValueChangeMode: String = "No value changed"
     
-    private var sliderValue: Observable<Float> = Observable(0)
+    @Pub private var sliderValue: Float = 0
     
     private var testString = Observable("Hello, World!")
     
@@ -63,7 +63,7 @@ class ViewController: FormViewController {
             }
             
             FormSection(title: "Slider") {
-                SliderRow(value: sliderValue, in: 0...100, step: 10) {
+                SliderRow(value: $sliderValue, in: 0...100, step: 10) {
                     UILabel("100")
                 } minimumValueLabel: {
                     UILabel("0")
@@ -76,7 +76,7 @@ class ViewController: FormViewController {
                 TextRow("Set custom value")
                     .textColor(.systemBlue)
                     .addAction { [weak self] in
-                        self?.sliderValue.value = Float.random(in: 0...100)
+                        self?.sliderValue = Float.random(in: 0...100)
                     }
                     .deselectWhenSelect(true)
             }
