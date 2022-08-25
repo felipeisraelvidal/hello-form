@@ -57,6 +57,7 @@ class ViewController: FormViewController {
                 .reloadRowAnimation(.fade)
                 
                 TextRow("Show/Hide")
+                    .font(.preferredFont(forTextStyle: .body))
                     .textColor(.systemBlue)
                     .deselectWhenSelect(true)
                     .addAction {

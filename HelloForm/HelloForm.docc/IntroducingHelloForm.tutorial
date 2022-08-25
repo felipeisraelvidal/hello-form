@@ -1,0 +1,15 @@
+@Tutorials(name: "IntroduingHelloForm") {
+    @Intro(title: "Introducing HelloForm") {
+        HelloForm is a modern way to declare forms for your app. Create beautiful, dynamic forms faster than ever before.
+        
+        @Image(source: "introducing_helloform.png", alt: "accessible description")
+    }
+    
+    @Chapter(name: "<#text#>") {
+        <#text#>
+        
+        @Image(source: <#file#>, alt: "<#accessible description#>")
+        
+        @TutorialReference(tutorial: "doc:<#tutorial name#>")
+    }
+}
