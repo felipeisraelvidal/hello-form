@@ -78,10 +78,6 @@ open class FormViewController: UIViewController {
             return nil
         }
         
-//        if formRow.isHiddenRow {
-//            cell.isHidden = true
-//        }
-        
         cell.configure(with: formRow, atIndexPath: indexPath)
         
         return cell

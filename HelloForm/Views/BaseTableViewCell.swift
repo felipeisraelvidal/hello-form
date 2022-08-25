@@ -5,8 +5,6 @@ public class BaseTableViewCell<T: Row>: UITableViewCell {
     private(set) var indexPath: IndexPath?
     private(set) var model: T?
     
-    private var isHiddenCell: Bool = true
-    
     private(set) lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [])
         stackView.axis = .horizontal
@@ -96,15 +94,6 @@ public class BaseTableViewCell<T: Row>: UITableViewCell {
         if model._isHiddenSeparator {
             separatorInset = UIEdgeInsets(top: 0, left: 2000, bottom: 0, right: 0)
         }
-        
-        isHiddenCell = model.isHiddenRow
-        
-//        model.$isHiddenRow.bind { [weak self] state in
-//            if state != self?.isHiddenCell {
-//                self?.reloadRow()
-//                self?.isHiddenCell = state
-//            }
-//        }
     }
     
     open func loadView() {}
