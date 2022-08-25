@@ -15,7 +15,7 @@ class ViewController: FormViewController {
     
     private let loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     
-    @Pub private var isHiddenCustomRow: Bool = false
+    @Pub private var isHiddenCustomRow: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +53,8 @@ class ViewController: FormViewController {
                     .setHeight(80)
                 }
                 .hidden($isHiddenCustomRow)
+                .tag("testing_hidden_row")
+                .reloadRowAnimation(.fade)
                 
                 TextRow("Show/Hide")
                     .textColor(.systemBlue)

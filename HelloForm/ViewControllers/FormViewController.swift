@@ -5,6 +5,7 @@ open class FormViewController: UIViewController {
     // MARK: - Proprties
     
     private(set) var sections: [FormSection] = []
+    private(set) var hiddenRows: [(row: Row, indexPath: IndexPath)] = []
     
     open var tableViewStyle: UITableView.Style {
         return .grouped
@@ -69,18 +70,17 @@ open class FormViewController: UIViewController {
         tableView.register(SwitchRowTableViewCell.self, forCellReuseIdentifier: SwitchRowTableViewCell.identifier)
         tableView.register(StepperRowTableViewCell.self, forCellReuseIdentifier: StepperRowTableViewCell.identifier)
         tableView.register(SliderRowTableViewCell.self, forCellReuseIdentifier: SliderRowTableViewCell.identifier)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
     }
     
     private func dequeueReusableCell<T: Row, R: BaseTableViewCell<T>>(rowType: T.Type, cellType: R.Type, formRow: T, atIndexPath indexPath: IndexPath) -> R? {
-        if formRow.isHiddenRow == true {
-            return nil
-        }
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: R.identifier, for: indexPath) as? R else {
             return nil
         }
+        
+//        if formRow.isHiddenRow {
+//            cell.isHidden = true
+//        }
         
         cell.configure(with: formRow, atIndexPath: indexPath)
         
@@ -91,6 +91,39 @@ open class FormViewController: UIViewController {
     
     public func makeSections(@FormBuilder _ content: () -> [FormSection]) {
         self.sections = content()
+        
+        for (sectionIndex, section) in sections.enumerated() {
+            for (rowIndex, row) in section.rows.enumerated() {
+                if let row = row as? Row, row._tag != nil {
+                    row.$isHiddenRow.bind { [weak self] result in
+                        guard let self = self else { return }
+                        
+                        if result {
+                            let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+                            self.hiddenRows.append((
+                                row: row,
+                                indexPath: indexPath
+                            ))
+                            self.sections[sectionIndex].delete(row)
+                            
+                            self.tableView.beginUpdates()
+                            self.tableView.deleteRows(at: [indexPath], with: row._reloadRowAnimation)
+                            self.tableView.endUpdates()
+                        } else {
+                            if let hiddenRow = self.hiddenRows.first(where: { $0.row._tag == row._tag })?.row {
+                                let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+                                self.sections[sectionIndex].insert(hiddenRow, at: rowIndex)
+                                
+                                self.tableView.beginUpdates()
+                                self.tableView.insertRows(at: [indexPath], with: row._reloadRowAnimation)
+                                self.tableView.endUpdates()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
         tableView.reloadData()
     }
     
@@ -112,7 +145,7 @@ open class FormViewController: UIViewController {
         tableView.endUpdates()
     }
     
-    public func insertRow(_ row: FormRowBase, atSection sectionIdentifier: String, at index: Int) {
+    public func insertRow(_ row: Row, atSection sectionIdentifier: String, at index: Int) {
         if let setionIndex = sections.firstIndex(where: { $0.identifier == sectionIdentifier }) {
             self.sections[setionIndex].insert(row, at: index)
             
@@ -122,7 +155,7 @@ open class FormViewController: UIViewController {
         }
     }
     
-    public func appendRow(_ row: FormRowBase, atSection sectionIdentifier: String) {
+    public func appendRow(_ row: Row, atSection sectionIdentifier: String) {
         if let sectionIndex = sections.firstIndex(where: { $0.identifier == sectionIdentifier }) {
             let rowIndex = sections[sectionIndex].rows.count
             
@@ -158,7 +191,7 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].rows.filter({ ($0 as? Row)?.isHiddenRow == false }).count
+        return sections[section].rows.count
     }
     
     public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -166,7 +199,7 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let row = sections[indexPath.section].rows.filter({ ($0 as? Row)?.isHiddenRow == false })[indexPath.row] as? FormRow else { return UITableViewCell() }
+        guard let row = sections[indexPath.section].rows[indexPath.row] as? FormRow else { return UITableViewCell() }
         
         switch row.self {
         case let formRow where formRow is TextRow:
@@ -219,7 +252,7 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let row = sections[indexPath.section].rows.filter({ ($0 as? Row)?.isHiddenRow == false })[indexPath.row] as? Row else { return }
+        guard let row = sections[indexPath.section].rows[indexPath.row] as? Row else { return }
         
         if row._deselectWhenSelect {
             tableView.deselectRow(at: indexPath, animated: true)
@@ -229,7 +262,7 @@ extension FormViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        guard let row = sections[indexPath.section].rows.filter({ ($0 as? Row)?.isHiddenRow == false })[indexPath.row] as? Row else { return }
+        guard let row = sections[indexPath.section].rows[indexPath.row] as? Row else { return }
         
         row.detailDisclosureButtonAction?()
     }

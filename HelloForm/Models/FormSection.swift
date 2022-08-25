@@ -19,8 +19,14 @@ public final class FormSection: FormSectionModifier {
     
     // MARK: - Public methods
     
-    public func insert(_ row: FormRowBase, at index: Int) {
+    public func insert(_ row: Row, at index: Int) {
         self.rows.insert(row, at: index)
+    }
+    
+    public func delete(_ row: Row) {
+        if let index = (rows as? [Row])?.firstIndex(where: { $0._tag == row._tag }) {
+            self.rows.remove(at: index)
+        }
     }
     
     // MARK: - Modifiers

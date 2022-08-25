@@ -14,4 +14,5 @@ public protocol FormRowModifier {
     func hideSeparators() -> Row
     func reloadRowAnimation(_ animation: UITableView.RowAnimation) -> Row
     func hidden(_ flag: Pub<Bool>) -> Row
+    func tag(_ tag: String) -> Row
 }

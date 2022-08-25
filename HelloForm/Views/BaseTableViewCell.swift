@@ -99,12 +99,12 @@ public class BaseTableViewCell<T: Row>: UITableViewCell {
         
         isHiddenCell = model.isHiddenRow
         
-        model.$isHiddenRow.bind { [weak self] state in
-            if state != self?.isHiddenCell {
-                self?.reloadSection()
-                self?.isHiddenCell = state
-            }
-        }
+//        model.$isHiddenRow.bind { [weak self] state in
+//            if state != self?.isHiddenCell {
+//                self?.reloadRow()
+//                self?.isHiddenCell = state
+//            }
+//        }
     }
     
     open func loadView() {}

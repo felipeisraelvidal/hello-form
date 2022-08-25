@@ -14,6 +14,7 @@ public protocol FormRow: FormRowBase {
     var _deselectWhenSelect: Bool { get }
     var _isHiddenSeparator: Bool { get }
     var _reloadRowAnimation: UITableView.RowAnimation { get }
+    var _tag: String? { get }
 }
 
 public class Row: FormRow, FormRowModifier {
@@ -30,6 +31,7 @@ public class Row: FormRow, FormRowModifier {
     public var _deselectWhenSelect: Bool = false
     public var _isHiddenSeparator: Bool = false
     public var _reloadRowAnimation: UITableView.RowAnimation = .automatic
+    public var _tag: String? = nil
     @Pub public private(set) var isHiddenRow: Bool = false
     
     // MARK: - Initializers
@@ -103,6 +105,12 @@ public class Row: FormRow, FormRowModifier {
     @discardableResult
     public func hidden(_ flag: Pub<Bool>) -> Row {
         self._isHiddenRow = flag
+        return self
+    }
+    
+    @discardableResult
+    public func tag(_ tag: String) -> Row {
+        self._tag = tag
         return self
     }
     
