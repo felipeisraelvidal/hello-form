@@ -27,7 +27,7 @@ class SliderRowTableViewCell: BaseTableViewCell<SliderRow> {
         
         slider.minimumValue = model.bounds.lowerBound
         slider.maximumValue = model.bounds.upperBound
-        slider.value = model.value.value
+        slider.value = model.value
         
         self.minimumValueLabel = model.minimumValueLabel
         self.maximumValueLabel = model.maximumValueLabel
@@ -40,7 +40,7 @@ class SliderRowTableViewCell: BaseTableViewCell<SliderRow> {
             stackView.addArrangedSubview(maximumValueLabel)
         }
         
-        model.value.bind { [weak self] result in
+        model.$value.bind { [weak self] result in
             self?.slider.setValue(result, animated: true)
         }
     }
@@ -58,7 +58,7 @@ class SliderRowTableViewCell: BaseTableViewCell<SliderRow> {
             let roundedValue = round(sender.value / step) * step
             sender.value = roundedValue
         }
-        model?.value.value = sender.value
+        model?.changeValue(to: sender.value)
     }
     
 }

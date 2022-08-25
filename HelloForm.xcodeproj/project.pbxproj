@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5519716828B6660A00F03457 /* Pub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5519716728B6660A00F03457 /* Pub.swift */; };
 		552CAE3028A56AF70074FABE /* HelloForm.docc in Sources */ = {isa = PBXBuildFile; fileRef = 552CAE2F28A56AF70074FABE /* HelloForm.docc */; };
 		552CAE3628A56AF70074FABE /* HelloForm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552CAE2B28A56AF70074FABE /* HelloForm.framework */; };
 		552CAE3B28A56AF70074FABE /* HelloFormTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552CAE3A28A56AF70074FABE /* HelloFormTests.swift */; };
@@ -105,6 +106,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5519716728B6660A00F03457 /* Pub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pub.swift; sourceTree = "<group>"; };
 		552CAE2B28A56AF70074FABE /* HelloForm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HelloForm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		552CAE2E28A56AF70074FABE /* HelloForm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloForm.h; sourceTree = "<group>"; };
 		552CAE2F28A56AF70074FABE /* HelloForm.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = HelloForm.docc; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				552CAE9E28A56FAF0074FABE /* Either.swift */,
 				552CAE9C28A56FAF0074FABE /* Identifiable.swift */,
 				552CAE9D28A56FAF0074FABE /* Observable.swift */,
+				5519716728B6660A00F03457 /* Pub.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -637,6 +640,7 @@
 				552CAEC528A56FCC0074FABE /* SubtitleTitleDescriptionRowTableViewCell.swift in Sources */,
 				552CAE3028A56AF70074FABE /* HelloForm.docc in Sources */,
 				552CAE9228A56F960074FABE /* TitleDescriptionRow.swift in Sources */,
+				5519716828B6660A00F03457 /* Pub.swift in Sources */,
 				552CAEBD28A56FCC0074FABE /* SwitchRowTableViewCell.swift in Sources */,
 				552CAE9128A56F960074FABE /* TextFieldRow.swift in Sources */,
 				552CAE8528A56F8A0074FABE /* FormSectionBuilder.swift in Sources */,

@@ -30,7 +30,7 @@ class TextFieldRowTableViewCell: BaseTableViewCell<TextFieldRow> {
         
         textField.tintColor = model._tintColor
         
-        model.text.bind { result in
+        model.$text.bind { result in
             self.textField.text = result
         }
     }
@@ -43,7 +43,7 @@ class TextFieldRowTableViewCell: BaseTableViewCell<TextFieldRow> {
     // MARK: - Private methods
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        model?.text.value = textField.text ?? ""
+        model?.changeValue(to: textField.text ?? "")
     }
 
 }

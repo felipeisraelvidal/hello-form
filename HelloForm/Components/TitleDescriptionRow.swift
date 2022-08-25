@@ -5,7 +5,7 @@ public final class TitleDescriptionRow: Row, TextDescriptionRowModifier {
     public var cellStyle: CellStyle = .default
     
     public var title: String
-    public var description: Either<String, Observable<String>>
+    public var description: Either<String, Pub<String>>
     
     private(set) var _titleFont: UIFont = .preferredFont(forTextStyle: .body).bold()
     private(set) var _titleTextColor: UIColor = UIColor.SystemColor.label
@@ -17,12 +17,25 @@ public final class TitleDescriptionRow: Row, TextDescriptionRowModifier {
     public init(
         _ cellStyle: CellStyle = .default,
         title: String,
-        description: Either<String, Observable<String>>,
+        description: String,
         image: UIImage? = nil
     ) {
         self.cellStyle = cellStyle
         self.title = title
-        self.description = description
+        self.description = .left(description)
+        
+        super.init(image: image)
+    }
+    
+    public init(
+        _ cellStyle: CellStyle = .default,
+        title: String,
+        description: Pub<String>,
+        image: UIImage? = nil
+    ) {
+        self.cellStyle = cellStyle
+        self.title = title
+        self.description = .right(description)
         
         super.init(image: image)
     }

@@ -36,9 +36,9 @@ class StepperRowTableViewCell: BaseTableViewCell<StepperRow> {
         stepper.minimumValue = model.bounds.lowerBound
         stepper.maximumValue = model.bounds.upperBound
         stepper.stepValue = model.step
-        stepper.value = model.value.value
+        stepper.value = model.value
         
-        model.value.bind { [weak self] result in
+        model.$value.bind { [weak self] result in
             self?.stepper.value = result
         }
     }
@@ -52,14 +52,14 @@ class StepperRowTableViewCell: BaseTableViewCell<StepperRow> {
     // MARK: - Private methods
     
     @objc private func stepperValueChanged(_ sender: UIStepper) {
-        if let oldValue = model?.value.value {
+        if let oldValue = model?.value {
             if sender.value > oldValue {
                 model?.onIncrement?()
             } else if sender.value < oldValue {
                 model?.onDecrement?()
             }
         }
-        model?.value.value = sender.value
+        model?.changeValue(to: sender.value)
     }
     
 }

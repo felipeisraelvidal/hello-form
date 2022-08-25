@@ -3,18 +3,18 @@ import UIKit
 public protocol FormRowBase {}
 
 public protocol FormRow: FormRowBase {
-    var image: UIImage? { get set }
-    var action: (() -> Void)? { get set }
-    var detailDisclosureButtonAction: (() -> Void)? { get set }
-    var edgeInsets: UIEdgeInsets { get set }
-    var _backgroundColor: UIColor? { get set }
-    var _tintColor: UIColor { get set }
-    var _accessoryType: UITableViewCell.AccessoryType { get set }
-    var _selectionStyle: UITableViewCell.SelectionStyle { get set }
-    var _deselectWhenSelect: Bool { get set }
-    var _isHiddenSeparator: Bool { get set }
-    var _reloadRowAnimation: UITableView.RowAnimation { get set }
-    var _isHiddenRow: Observable<Bool> { get set }
+    var image: UIImage? { get }
+    var action: (() -> Void)? { get }
+    var detailDisclosureButtonAction: (() -> Void)? { get }
+    var edgeInsets: UIEdgeInsets { get }
+    var _backgroundColor: UIColor? { get }
+    var _tintColor: UIColor { get }
+    var _accessoryType: UITableViewCell.AccessoryType { get }
+    var _selectionStyle: UITableViewCell.SelectionStyle { get }
+    var _deselectWhenSelect: Bool { get }
+    var _isHiddenSeparator: Bool { get }
+    var _reloadRowAnimation: UITableView.RowAnimation { get }
+    var _tag: String? { get }
 }
 
 public class Row: FormRow, FormRowModifier {
@@ -31,7 +31,8 @@ public class Row: FormRow, FormRowModifier {
     public var _deselectWhenSelect: Bool = false
     public var _isHiddenSeparator: Bool = false
     public var _reloadRowAnimation: UITableView.RowAnimation = .automatic
-    public var _isHiddenRow: Observable<Bool> = Observable(false)
+    public var _tag: String? = nil
+    @Pub public private(set) var isHiddenRow: Bool = false
     
     // MARK: - Initializers
     
@@ -102,8 +103,14 @@ public class Row: FormRow, FormRowModifier {
     }
     
     @discardableResult
-    public func hidden(_ flag: Observable<Bool>) -> Row {
+    public func hidden(_ flag: Pub<Bool>) -> Row {
         self._isHiddenRow = flag
+        return self
+    }
+    
+    @discardableResult
+    public func tag(_ tag: String) -> Row {
+        self._tag = tag
         return self
     }
     

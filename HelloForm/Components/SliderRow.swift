@@ -1,7 +1,7 @@
 import UIKit
 
 public final class SliderRow: Row {
-    private(set) var value: Observable<Float>
+    @Pub private(set) var value: Float
     private(set) var bounds: ClosedRange<Float>
     private(set) var step: Float.Stride
     
@@ -11,12 +11,12 @@ public final class SliderRow: Row {
     // MARK: - Initializers
     
     public init(
-        value: Observable<Float>,
+        value: Pub<Float>,
         in bounds: ClosedRange<Float> = 0...1,
         step: Float.Stride = 1,
         image: UIImage? = nil
     ) {
-        self.value = value
+        self._value = value
         self.bounds = bounds
         self.step = step
         
@@ -24,14 +24,14 @@ public final class SliderRow: Row {
     }
     
     public init(
-        value: Observable<Float>,
+        value: Pub<Float>,
         in bounds: ClosedRange<Float> = 0...1,
         step: Float.Stride = 1,
         image: UIImage? = nil,
         @ViewBuilder<UILabel> maximumValueLabel: () -> UILabel,
         @ViewBuilder<UILabel> minimumValueLabel: () -> UILabel
     ) {
-        self.value = value
+        self._value = value
         self.bounds = bounds
         self.step = step
         
@@ -39,5 +39,11 @@ public final class SliderRow: Row {
         self.minimumValueLabel = minimumValueLabel()
         
         super.init(image: image)
+    }
+    
+    // MARK: - Public methods
+    
+    public func changeValue(to newValue: Float) {
+        self.value = newValue
     }
 }

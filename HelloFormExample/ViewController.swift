@@ -3,19 +3,19 @@ import HelloForm
 
 class ViewController: FormViewController {
     
-    private var text = Observable("")
-    private var isPrivate = Observable(false)
+    @Pub private var text = ""
+    @Pub private var isPrivate = false
     
-    private var stepperValue: Observable<Double> = Observable(2)
-    private var stepperValueChangeMode = Observable("No value changed")
+    @Pub private var stepperValue: Double = 2
+    @Pub private var stepperValueChangeMode: String = "No value changed"
     
-    private var sliderValue: Observable<Float> = Observable(0)
+    @Pub private var sliderValue: Float = 0
     
-    private var testString = Observable("Hello, World!")
+    @Pub private var testString: String = "Hello, World!"
     
     private let loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     
-    private var isHiddenCustomRow = Observable(false)
+    @Pub private var isHiddenCustomRow: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,58 +52,60 @@ class ViewController: FormViewController {
                     .fillSuperview(offset: 0)
                     .setHeight(80)
                 }
-                .hidden(isHiddenCustomRow)
+                .hidden($isHiddenCustomRow)
+                .tag("testing_hidden_row")
+                .reloadRowAnimation(.fade)
                 
-                TextRow(.left("Show/Hide"))
+                TextRow("Show/Hide")
                     .textColor(.systemBlue)
                     .deselectWhenSelect(true)
                     .addAction {
-                        self.isHiddenCustomRow.value.toggle()
+                        self.isHiddenCustomRow.toggle()
                     }
             }
             
             FormSection(title: "Slider") {
-                SliderRow(value: sliderValue, in: 0...100, step: 10) {
+                SliderRow(value: $sliderValue, in: 0...100, step: 10) {
                     UILabel("100")
                 } minimumValueLabel: {
                     UILabel("0")
                 }
                 .selectionStyle(.none)
                 
-                TextRow(.left("Slider value"))
+                TextRow("Slider value")
                     .selectionStyle(.none)
                 
-                TextRow(.left("Set custom value"))
+                TextRow("Set custom value")
                     .textColor(.systemBlue)
                     .addAction { [weak self] in
-                        self?.sliderValue.value = Float.random(in: 0...100)
+                        self?.sliderValue = Float.random(in: 0...100)
                     }
                     .deselectWhenSelect(true)
             }
             
             FormSection(title: "Stepper") {
-                StepperRow("Stepper", value: stepperValue, in: 0...5) {
-                    self.stepperValueChangeMode.value = "Increment"
+                StepperRow("Stepper", value: $stepperValue, in: 0...5) {
+                    self.stepperValueChangeMode = "Increment"
                 } onDecrement: {
-                    self.stepperValueChangeMode.value = "Decrement"
+                    self.stepperValueChangeMode = "Decrement"
                 }
                 
-                TextRow(.right(stepperValueChangeMode))
+                TextRow($stepperValueChangeMode)
                     .reloadRowAnimation(.none)
                 
-                TextRow(.left("Set Minimum Value"))
+                TextRow("Set Minimum Value")
                     .textColor(.systemBlue)
                     .addAction { [weak self] in
-                        self?.stepperValue.value = 0
+                        self?.stepperValue = 0
                     }
                     .deselectWhenSelect(true)
             }
             
             FormSection(footer: "Enter your text and tap enter to add new item") {
-                SwitchRow("Is private", isOn: isPrivate)
+                SwitchRow("Is private", isOn: $isPrivate)
                     .selectionStyle(.none)
                 
-                TextFieldRow("Placeholder", text: self.text)
+                TextFieldRow("Placeholder", text: $text)
                     .font(.preferredFont(forTextStyle: .title2))
                     .onSubmit { [weak self] _ in
                         self?.addRow()
@@ -114,7 +116,7 @@ class ViewController: FormViewController {
                     .selectionStyle(.none)
                     .padding(top: 16, bottom: 16)
                 
-                TextRow(.left("Add Item"))
+                TextRow("Add Item")
                     .textColor(.systemBlue)
                     .deselectWhenSelect(true)
                     .addAction { [weak self] in
@@ -124,7 +126,7 @@ class ViewController: FormViewController {
             
             FormSection("section_1") {
                 for item in arr {
-                    TextRow(.left(item))
+                    TextRow(item)
                         .accessoryType(.detailDisclosureButton)
                         .addAction {
                             self.showNextViewController()
@@ -137,28 +139,28 @@ class ViewController: FormViewController {
 
             if shouldShowExperimental {
                 FormSection(title: "Section 1", footer: "Lorem Ipsum") {
-                    TextRow(.left(loremIpsum), image: .init(systemName: "iphone"))
+                    TextRow(loremIpsum, image: .init(systemName: "iphone"))
                         .textColor(.systemRed)
                         .accessoryType(.disclosureIndicator)
                         .deselectWhenSelect(true)
                     
-                    TextRow(.left("Row 1"))
+                    TextRow("Row 1")
                         .selectionStyle(.none)
                     
-                    TextRow(.left("Row 1"))
+                    TextRow("Row 1")
                 }
             }
 
             FormSection(footer: loremIpsum) {
-                TitleDescriptionRow(title: "Title", description: .right(testString))
+                TitleDescriptionRow(title: "Title", description: $testString)
                     .textColor(
                         titleLabel: .systemPurple,
                         descriptionLabel: .systemBrown
                     )
                 
-                TitleDescriptionRow(.subtitle, title: "Title", description: .left(loremIpsum))
+                TitleDescriptionRow(.subtitle, title: "Title", description: loremIpsum)
                 
-                TextRow(.left("Reload First Cell"))
+                TextRow("Reload First Cell")
                     .textColor(.systemBlue)
                     .deselectWhenSelect(true)
                     .addAction { [weak self] in
@@ -169,7 +171,7 @@ class ViewController: FormViewController {
             FormSection {
                 let swiftSymbol = UIImage.init(systemName: "swift")
                 
-                TextRow(.left("Add New Section"), image: swiftSymbol)
+                TextRow("Add New Section", image: swiftSymbol)
                     .textColor(.systemBlue)
                     .deselectWhenSelect(true)
                     .addAction { [weak self] in
@@ -180,24 +182,24 @@ class ViewController: FormViewController {
     }
     
     func updateFirstCell() {
-        testString.value = loremIpsum
+        testString = loremIpsum
     }
     
     func addSection() {
         let newSection = FormSection {
-            TextRow(.left("Testing..."))
+            TextRow("Testing...")
         }
         appendSection(newSection)
     }
     
     func addRow() {
-        if text.value != "" {
-            let newTextRow = TextRow(.left("\(isPrivate.value ? "[L] " : "")\(text.value)"))
+        if text != "" {
+            let newTextRow = TextRow("\(isPrivate ? "[L] " : "")\(text)")
                 .accessoryType(.detailDisclosureButton)
             
             insertRow(newTextRow, atSection: "section_1", at: 0)
             
-            self.text.value = ""
+            self.text = ""
         }
     }
     

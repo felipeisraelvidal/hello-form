@@ -1,17 +1,26 @@
 import UIKit
 
 public final class TextRow: Row, TextRowModifier {
-    private(set) var text: Either<String, Observable<String>>
+    private(set) var text: Either<String, Pub<String>>
     
     private(set) var _font: UIFont = .preferredFont(forTextStyle: .body)
     private(set) var _textColor: UIColor = UIColor.SystemColor.label
     private(set) var _textAlignment: NSTextAlignment = .natural
     
     public init(
-        _ text: Either<String, Observable<String>>,
+        _ text: String,
         image: UIImage? = nil
     ) {
-        self.text = text
+        self.text = .left(text)
+        
+        super.init(image: image)
+    }
+    
+    public init(
+        _ text: Pub<String>,
+        image: UIImage? = nil
+    ) {
+        self.text = .right(text)
         
         super.init(image: image)
     }
