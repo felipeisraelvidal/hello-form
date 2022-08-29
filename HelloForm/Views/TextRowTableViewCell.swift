@@ -20,11 +20,24 @@ public class TextRowTableViewCell: BaseTableViewCell<TextRow> {
         
         switch model.text {
         case .left(let value):
-            titleLabel.text = value
+            switch value {
+            case .left(let result):
+                titleLabel.text = result
+            case .right(let result):
+                titleLabel.attributedText = result
+            }
         case .right(let value):
-            value.bind { [weak self] result in
-                self?.titleLabel.text = result
-                self?.reloadRow()
+            switch value {
+            case .left(let result):
+                result.bind { [weak self] result in
+                    self?.titleLabel.text = result
+                    self?.reloadRow()
+                }
+            case .right(let result):
+                result.bind { [weak self] result in
+                    self?.titleLabel.attributedText = result
+                    self?.reloadRow()
+                }
             }
         }
     }
