@@ -7,6 +7,22 @@ open class FormViewController: UIViewController {
     private(set) var sections: [FormSection] = []
     private(set) var hiddenRows: [(row: Row, indexPath: IndexPath)] = []
     
+    private(set) var autolayoutTableViewHeader: UIView? {
+        set {
+            guard let header = newValue else { return }
+            header.setNeedsLayout()
+            header.layoutIfNeeded()
+            header.frame.size = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            
+            DispatchQueue.main.async {
+                self.tableView.tableHeaderView = header
+            }
+        }
+        get {
+            return tableView.tableHeaderView
+        }
+    }
+    
     open var tableViewStyle: UITableView.Style {
         return .grouped
     }
@@ -84,6 +100,10 @@ open class FormViewController: UIViewController {
     }
     
     // MARK: - Public methods
+    
+    public func makeHeader(@FormHeaderFooterBuilder<UIView> _ content: () -> UIView) {
+        self.autolayoutTableViewHeader = content()
+    }
     
     public func makeSections(@FormBuilder _ content: () -> [FormSection]) {
         self.sections = content()
@@ -168,6 +188,21 @@ open class FormViewController: UIViewController {
             let sections = IndexSet(integersIn: 0..<tableView.numberOfSections)
             tableView.reloadSections(sections, with: .automatic)
         }
+    }
+    
+    private func sizeHeaderToFit() {
+        let header = tableView.tableHeaderView
+
+        header?.setNeedsLayout()
+        header?.layoutIfNeeded()
+
+        let height = header?.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height ?? 0.0
+        var frame = header?.frame
+
+        frame?.size.height = height
+        header?.frame = frame ?? CGRect.zero
+
+        tableView.tableHeaderView = header
     }
     
 }

@@ -58,6 +58,8 @@
 		552CAEC928A570020074FABE /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552CAEC828A570020074FABE /* UIColor+Extensions.swift */; };
 		55300D5128B3C266001C8AEA /* HelloForm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552CAE2B28A56AF70074FABE /* HelloForm.framework */; };
 		55300D5228B3C266001C8AEA /* HelloForm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 552CAE2B28A56AF70074FABE /* HelloForm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		55D1543B28BD4710003F869A /* FormHeaderFooterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D1543A28BD4710003F869A /* FormHeaderFooterBuilder.swift */; };
+		55D1543D28BD47FB003F869A /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D1543C28BD47FB003F869A /* HeaderView.swift */; };
 		55D3E35A28AA6DDC004477A9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D3E35628AA6DDC004477A9 /* UIView.swift */; };
 		55D3E35B28AA6DDC004477A9 /* HStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D3E35728AA6DDC004477A9 /* HStack.swift */; };
 		55D3E35C28AA6DDC004477A9 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D3E35828AA6DDC004477A9 /* UILabel.swift */; };
@@ -161,6 +163,8 @@
 		552CAEBC28A56FCC0074FABE /* SubtitleTitleDescriptionRowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleTitleDescriptionRowTableViewCell.swift; sourceTree = "<group>"; };
 		552CAEC628A56FD50074FABE /* FormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		552CAEC828A570020074FABE /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		55D1543A28BD4710003F869A /* FormHeaderFooterBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormHeaderFooterBuilder.swift; sourceTree = "<group>"; };
+		55D1543C28BD47FB003F869A /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		55D3E35628AA6DDC004477A9 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		55D3E35728AA6DDC004477A9 /* HStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HStack.swift; sourceTree = "<group>"; };
 		55D3E35828AA6DDC004477A9 /* UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
@@ -268,6 +272,7 @@
 				55D3E35428AA6DAC004477A9 /* CoreUI */,
 				552CAE4B28A56B0B0074FABE /* AppDelegate.swift */,
 				552CAE4D28A56B0B0074FABE /* SceneDelegate.swift */,
+				55D1543C28BD47FB003F869A /* HeaderView.swift */,
 				552CAE4F28A56B0B0074FABE /* ViewController.swift */,
 				552CAE5428A56B0E0074FABE /* Assets.xcassets */,
 				552CAE5628A56B0E0074FABE /* LaunchScreen.storyboard */,
@@ -299,6 +304,7 @@
 				552CAE8428A56F8A0074FABE /* FormBuilder.swift */,
 				552CAE8228A56F8A0074FABE /* FormSectionBuilder.swift */,
 				552CAE8328A56F8A0074FABE /* ViewBuilder.swift */,
+				55D1543A28BD4710003F869A /* FormHeaderFooterBuilder.swift */,
 			);
 			path = Builders;
 			sourceTree = "<group>";
@@ -639,6 +645,7 @@
 				552CAEAA28A56FB80074FABE /* RowModifier.swift in Sources */,
 				552CAEC528A56FCC0074FABE /* SubtitleTitleDescriptionRowTableViewCell.swift in Sources */,
 				552CAE3028A56AF70074FABE /* HelloForm.docc in Sources */,
+				55D1543B28BD4710003F869A /* FormHeaderFooterBuilder.swift in Sources */,
 				552CAE9228A56F960074FABE /* TitleDescriptionRow.swift in Sources */,
 				5519716828B6660A00F03457 /* Pub.swift in Sources */,
 				552CAEBD28A56FCC0074FABE /* SwitchRowTableViewCell.swift in Sources */,
@@ -691,6 +698,7 @@
 				55D3E35B28AA6DDC004477A9 /* HStack.swift in Sources */,
 				552CAE4C28A56B0B0074FABE /* AppDelegate.swift in Sources */,
 				55D3E36528AA6DF9004477A9 /* StackBuilder.swift in Sources */,
+				55D1543D28BD47FB003F869A /* HeaderView.swift in Sources */,
 				55D3E35C28AA6DDC004477A9 /* UILabel.swift in Sources */,
 				552CAE4E28A56B0B0074FABE /* SceneDelegate.swift in Sources */,
 				55D3E36128AA6DEA004477A9 /* DeclarativeView.swift in Sources */,

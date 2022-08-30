@@ -32,6 +32,11 @@ class ViewController: FormViewController {
             "Item 3"
         ]
         
+        makeHeader {
+            HeaderView(text: loremIpsum)
+                .setBackgroundColor(.systemPink)
+        }
+        
         makeSections {
             FormSection {
                 CustomRow {
